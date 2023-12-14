@@ -16,5 +16,161 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.10.1</version>
+        </dependency>
+        <dependency>
+            <groupId>io.rest-assured</groupId>
+            <artifactId>rest-assured</artifactId>
+            <version>4.4.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <version>1.3.2</version>
+        </dependency>
+        <dependency>
+            <groupId>io.gsonfire</groupId>
+            <artifactId>gson-fire</artifactId>
+            <version>1.9.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.okio</groupId>
+            <artifactId>okio</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+        </dependency>
+    </dependencies>
+    <!--    https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin -->
+<!--   https://mvnrepository.com/artifact/org.openapitools/openapi-generator-maven-plugin -->
+
+    <build>
+        <plugins>
+
+<!--            openApiGenerator -->
+            <plugin>
+                <groupId>org.openapitools</groupId>
+                <artifactId>openapi-generator-maven-plugin</artifactId>
+                <version>7.1.0</version>
+                <executions>
+                    <execution>
+                        <id>petstore-classic-codegen</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>https://petstore.swagger.io/v2/swagger.json</inputSpec>
+                            <generatorName>java</generatorName>
+                            <configOptions>
+                                <sourceFolder>src/gen/java/main/petStoreClassicGenerated</sourceFolder>
+                                <library>rest-assured</library>
+                                <invokerPackage>org.openapitools.client.service.petStoreService</invokerPackage> <!-- Default: org.openapitools.client -->
+                                <apiPackage>org.openapitools.client.api.petStoreApi</apiPackage>
+                                <modelPackage>org.openapitools.client.model.petStoreModel</modelPackage>
+                                <generateApiTests>true</generateApiTests> <!-- Default: false -->
+                                <generateModelTests>true</generateModelTests> <!-- Default: false -->
+                                <generateApiDocumentation>true</generateApiDocumentation> <!-- Default: true -->
+                                <generateModelDocumentation>true</generateModelDocumentation> <!-- Default: true -->
+                                <generateSupportingFiles>true</generateSupportingFiles> <!-- Default: true -->
+                            </configOptions>
+                        </configuration>
+                    </execution>
+
+                    <execution>
+                        <id>adobe-api-codegen</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <inputSpec>https://api.apis.guru/v2/specs/adobe.com/aem/3.7.1-pre.0/openapi.json</inputSpec>
+                            <generatorName>java</generatorName>
+                            <configOptions>
+                                <sourceFolder>src/gen/java/main/adobeSwaggerGenerated</sourceFolder>
+                                <library>rest-assured</library>
+                                <invokerPackage>org.openapitools.client.service.adobeService</invokerPackage>
+                                <apiPackage>org.openapitools.client.api.adobe</apiPackage>
+                                <modelPackage>org.openapitools.client.model.adobe</modelPackage>
+                                <generateApiTests>true</generateApiTests> <!-- Default: false -->
+                                <generateModelTests>true</generateModelTests> <!-- Default: false -->
+                                <generateApiDocumentation>true</generateApiDocumentation> <!-- Default: true -->
+                                <generateModelDocumentation>true</generateModelDocumentation> <!-- Default: true -->
+                                <generateSupportingFiles>false</generateSupportingFiles> <!-- Default: true -->
+                            </configOptions>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Maven Resources Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <!-- Copy resources for Petstore API -->
+                    <execution>
+                        <id>copy-resources-petStoreClassic</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+<!--                            <outputDirectory>${project.basedir}/src/main/java/petStore</outputDirectory>-->
+                            <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                            <resources>
+                                <resource>
+<!--                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/org/openapitools/client</directory>-->
+                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/petStoreClassicGenerated</directory>
+                                    <filtering>false</filtering>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+
+                    <!-- Copy resources for Adobe API -->
+                    <execution>
+                        <id>copy-resources-adobeSwagger</id>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                            <resources>
+                                <resource>
+<!--                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/org/openapitools/client</directory>-->
+                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/adobeSwaggerGenerated</directory>
+                                    <filtering>false</filtering>
+                                    <includes>
+                                        <include>**/*</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+
+        </plugins>
+
+    </build>
 
 </project>
