@@ -1,4 +1,5 @@
 import org.junit.Test;
+import org.openapitools.client.service.petStoreService.ApiClient;
 
 public class MyTest {
 
