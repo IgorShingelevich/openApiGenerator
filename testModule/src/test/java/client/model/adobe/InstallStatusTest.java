@@ -23,7 +23,7 @@ import java.io.IOException;
 import org.openapitools.client.model.adobe.InstallStatus;
 import org.openapitools.client.model.adobe.InstallStatusStatus;
 import org.junit.Assert;
-import org.junit.Ignore;
+
 import org.junit.Test;
 
 /**

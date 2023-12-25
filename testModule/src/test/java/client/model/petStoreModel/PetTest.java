@@ -22,16 +22,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Tag;
 import org.openapitools.client.model.petStoreModel.Category;
 import org.openapitools.client.model.petStoreModel.Pet;
-import org.openapitools.client.model.petStoreModel.Tag;
 import org.junit.Assert;
-import org.junit.Ignore;
+
 import org.junit.Test;
 
 /**
  * Model tests for Pet
  */
+@Tag("api")
+@Epic("setEpic")
+@Feature("setFeature")
+@Story("setStory")
+//@Disabled
 public class PetTest {
     private final Pet model = new Pet();
 

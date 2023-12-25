@@ -22,7 +22,7 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.ErrorLoggingFilter;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.Ignore;
+
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -38,7 +38,16 @@ import static org.openapitools.client.service.petStoreService.GsonObjectMapper.g
 /**
  * API tests for PetApi
  */
-@Ignore
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.*;
+
+@Tag("api")
+@Epic("setEpic")
+@Feature("setFeature")
+@Story("setStory")
+@Disabled
 public class PetApiTest {
 
     private PetApi api;

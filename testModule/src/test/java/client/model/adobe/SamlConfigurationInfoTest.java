@@ -23,7 +23,7 @@ import java.io.IOException;
 import org.openapitools.client.model.adobe.SamlConfigurationInfo;
 import org.openapitools.client.model.adobe.SamlConfigurationProperties;
 import org.junit.Assert;
-import org.junit.Ignore;
+
 import org.junit.Test;
 
 /**

@@ -14,14 +14,16 @@
 package client.api.petStoreApi;
 
 import java.time.OffsetDateTime;
+
+
+
 import org.openapitools.client.model.petStoreModel.User;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.UserApi;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.ErrorLoggingFilter;
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.Ignore;
+
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
@@ -32,16 +34,24 @@ import java.util.Map;
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
 import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.*;
 
+@Tag("api")
+@Epic("setEpic")
+@Feature("setFeature")
+@Story("setStory")
+@Disabled
 /**
  * API tests for UserApi
  */
-@Ignore
 public class UserApiTest {
 
     private UserApi api;
 
-    @Before
+    @BeforeEach
     public void createApi() {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
                 () -> new RequestSpecBuilder()
