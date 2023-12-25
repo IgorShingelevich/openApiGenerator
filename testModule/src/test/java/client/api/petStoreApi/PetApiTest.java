@@ -26,12 +26,13 @@ import org.junit.Ignore;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static io.restassured.RestAssured.given;
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
 /**
@@ -58,8 +59,29 @@ public class PetApiTest {
     public void shouldSee405AfterAddPet() {
         Pet body = null;
         api.addPet()
-                .body(body).execute(r -> r.prettyPeek());
+                .body(body).execute(r -> r.prettyPeek())
+                .then()
+                .statusCode(405) // Validate that the status code is indeed 405
+                .body("type", equalTo("error")) // Assuming the response has an error type field
+                .body("message", containsString("Method Not Allowed")); // Validate the error message
         // TODO: test validations
+    }
+
+    @Test
+    public void shouldSee405AfterAddPet2() {
+        // Define the base URI for the Petstore API
+        String baseUri = "https://petstore.swagger.io/v2";
+
+        // Send a POST request directly using RestAssured, with a null body
+        given()
+                .baseUri(baseUri)
+                .basePath("/pet")
+                .contentType("application/json")
+                .body("")
+                .when()
+                .post()
+                .then()
+                .statusCode(405); // Replace with the expected status code
     }
 
 

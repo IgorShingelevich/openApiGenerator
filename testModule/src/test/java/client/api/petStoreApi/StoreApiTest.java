@@ -13,6 +13,8 @@
 
 package client.api.petStoreApi;
 
+import api.BaseTest;
+import api.CustomApiClient;
 import org.openapitools.client.model.petStoreModel.Order;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.StoreApi;
@@ -36,9 +38,10 @@ import static org.openapitools.client.service.petStoreService.GsonObjectMapper.g
  * API tests for StoreApi
  */
 @Ignore
-public class StoreApiTest {
+public class StoreApiTest extends BaseTest {
 
     private StoreApi api;
+
 
     @Before
     public void createApi() {
@@ -48,6 +51,10 @@ public class StoreApiTest {
                         .addFilter(new ErrorLoggingFilter())
                         .setBaseUri("https://petstore.swagger.io/v2"))).store();
     }
+//@Override
+//protected CustomApiClient createCustomApiClient() {
+//    return new CustomApiClient("https://petstore.swagger.io/v2", StoreApi.class,  StoreApi::store);
+//}
 
     /**
      * Invalid ID supplied

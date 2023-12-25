@@ -38,7 +38,6 @@ public class PetTest {
     /**
      * Model tests for Pet
      */
-    @Test
     public void testPet() {
         // TODO: test Pet
     }

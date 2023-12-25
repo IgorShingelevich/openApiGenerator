@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * KeystoreChainItems
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-14T17:32:45.038644100+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-20T10:31:03.539745700+03:00[Europe/Moscow]")
 public class KeystoreChainItems {
   public static final String SERIALIZED_NAME_ISSUER = "issuer";
   @SerializedName(SERIALIZED_NAME_ISSUER)
