@@ -1,13 +1,14 @@
 package api;
 
 import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 
 public abstract class BaseTest {
 
-    protected CustomApiClient apiClient;
+//    protected CustomApiClient apiClient;
 
-    @Before
-    public void setUp() {
+    @BeforeAll
+    public static void setUp() {
     }
 
 }

@@ -19,7 +19,7 @@ import org.openapitools.client.api.adobe.GraniteApi;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.ErrorLoggingFilter;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 
 import java.time.LocalDate;

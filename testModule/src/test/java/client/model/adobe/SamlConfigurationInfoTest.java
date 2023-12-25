@@ -24,7 +24,7 @@ import org.openapitools.client.model.adobe.SamlConfigurationInfo;
 import org.openapitools.client.model.adobe.SamlConfigurationProperties;
 import org.junit.Assert;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Model tests for SamlConfigurationInfo

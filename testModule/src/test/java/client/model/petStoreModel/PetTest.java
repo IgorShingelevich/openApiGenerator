@@ -13,26 +13,25 @@
 
 package client.model.petStoreModel;
 
-import com.google.gson.TypeAdapter;
-import com.google.gson.annotations.JsonAdapter;
-import com.google.gson.annotations.SerializedName;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.Disabled;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.ErrorLoggingFilter;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
-import org.openapitools.client.model.petStoreModel.Category;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
+import org.openapitools.client.api.petStoreApi.PetApi;
 import org.openapitools.client.model.petStoreModel.Pet;
-import org.junit.Assert;
 
-import org.junit.Test;
+import org.openapitools.client.service.petStoreService.ApiClient;
+
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
+import static io.restassured.config.RestAssuredConfig.config;
+import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
 /**
  * Model tests for Pet
@@ -44,11 +43,26 @@ import org.junit.Test;
 //@Disabled
 public class PetTest {
     private final Pet model = new Pet();
+    private PetApi api;
+
+    @BeforeEach
+    public void createApi() {
+        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
+                () -> new RequestSpecBuilder()
+                        .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
+                        .addFilter(new ErrorLoggingFilter())
+                        .addFilter(new CustomLoggingFilter())
+                        .setBaseUri("https://petstore.swagger.io/v2"))).pet();
+    }
 
     /**
      * Model tests for Pet
      */
-    public void testPet() {
+    @EnumSource(PetModelPositiveCase.class)
+    @ParameterizedTest(name = "{0}")
+    @DisplayName("param test pet")
+    public void testPet(PetModelPositiveCase testCase) {
+        Pet pet = testCase.getPet();
         // TODO: test Pet
     }
 

@@ -27,7 +27,7 @@ import org.openapitools.client.model.adobe.TruststoreInfo;
 import org.openapitools.client.model.adobe.TruststoreItems;
 import org.junit.Assert;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Model tests for TruststoreInfo
