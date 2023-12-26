@@ -15,7 +15,8 @@ package client.api.petStoreApi;
 
 import java.io.File;
 
-import client.model.petStoreModel.CustomLoggingFilter;
+import baseApi.CustomLoggingFilter;
+import io.restassured.response.Response;
 import org.openapitools.client.model.petStoreModel.Pet;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.PetApi;
@@ -38,7 +39,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 
-@Tag("api")
+@Tag("baseApi")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")
@@ -86,6 +87,7 @@ public class PetApiTest {
 //                .body("type", equalTo("error")) // Assuming the response has an error type field
 //                .body("message", containsString("Method Not Allowed"))
         ; // Validate the error message
+        System.out.println("request body: " + body);
         // TODO: test validations
     }
 
@@ -137,9 +139,10 @@ public class PetApiTest {
      */
     @Test
     public void shouldSee200AfterFindPetsByStatus() {
-        List<String> status = null;
-        api.findPetsByStatus()
+        List<String> status = List.of("123123");
+        Response response = api.findPetsByStatus()
                 .statusQuery(status).execute(r -> r.prettyPeek());
+        System.out.println("response: " + response.body().toString());
         // TODO: test validations
     }
 

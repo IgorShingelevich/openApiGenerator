@@ -13,8 +13,6 @@
 
 package client.api.adobe;
 
-import org.openapitools.client.model.adobe.BundleInfo;
-import org.openapitools.client.model.adobe.SamlConfigurationInfo;
 import org.openapitools.client.service.adobeService.ApiClient;
 import org.openapitools.client.api.adobe.ConsoleApi;
 import io.restassured.builder.RequestSpecBuilder;
@@ -23,12 +21,8 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
 import static org.openapitools.client.service.adobeService.GsonObjectMapper.gson;
@@ -41,7 +35,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 
-@Tag("api")
+@Tag("baseApi")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")

@@ -13,11 +13,13 @@
 
 package client.model.petStoreModel;
 
+import baseApi.CustomLoggingFilter;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.ErrorLoggingFilter;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -31,12 +33,13 @@ import org.openapitools.client.service.petStoreService.ApiClient;
 
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
 /**
  * Model tests for Pet
  */
-@Tag("api")
+@Tag("baseApi")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")
@@ -50,7 +53,7 @@ public class PetTest {
         api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
                 () -> new RequestSpecBuilder()
                         .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .addFilter(new ErrorLoggingFilter())
+//                        .addFilter(new ErrorLoggingFilter())
                         .addFilter(new CustomLoggingFilter())
                         .setBaseUri("https://petstore.swagger.io/v2"))).pet();
     }
@@ -63,8 +66,19 @@ public class PetTest {
     @DisplayName("param test pet")
     public void testPet(PetModelPositiveCase testCase) {
         Pet pet = testCase.getPet();
-        // TODO: test Pet
+        Integer expectedStatusCode = testCase.getStatusCode();
+
+        // Adjusted API call to match the builder pattern
+        Response response = api.addPet()
+                .body(pet)
+                .execute(r -> r.prettyPeek());
+
+        System.out.println("response: " + response.body().toString());
+
+        // Assert that the response status code is as expected
+        assertEquals(expectedStatusCode, response.getStatusCode(), "Status code does not match the expected value.");
     }
+
 
     /**
      * Test the property 'id'

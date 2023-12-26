@@ -13,8 +13,7 @@
 
 package client.api.petStoreApi;
 
-import api.BaseTest;
-import api.CustomApiClient;
+import baseApi.BaseTest;
 import org.openapitools.client.model.petStoreModel.Order;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.StoreApi;
@@ -24,12 +23,6 @@ import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
 import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
@@ -42,7 +35,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 
-@Tag("api")
+@Tag("baseApi")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")

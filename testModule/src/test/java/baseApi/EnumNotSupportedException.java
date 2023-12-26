@@ -1,4 +1,4 @@
-package client.model.petStoreModel;
+package baseApi;
 
 public class EnumNotSupportedException extends RuntimeException {
     public EnumNotSupportedException(Enum<?> enumMember) {

@@ -1,6 +1,5 @@
-package api;
+package baseApi;
 
-import org.junit.Before;
 import org.junit.jupiter.api.BeforeAll;
 
 public abstract class BaseTest {
