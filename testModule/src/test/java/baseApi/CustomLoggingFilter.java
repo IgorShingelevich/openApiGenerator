@@ -15,7 +15,7 @@ public class CustomLoggingFilter implements Filter {
         Response response = filterContext.next(requestSpec, responseSpec);
         String uri = requestSpec.getURI();
         String responseBody = response.asString();
-//        logResponseToFile(uri, responseBody);
+        logResponseToFile(uri, responseBody);
         // Capture and log request details
         String requestDetails = buildRequestDetails(requestSpec);
         Allure.addAttachment("API Request", "text/plain", requestDetails);
@@ -31,7 +31,7 @@ public class CustomLoggingFilter implements Filter {
         String sanitizedUri = uri.replaceAll("\\W", "_");
 
         // Use JsonLogger to log the response to a file
-//        JsonLogger.log(sanitizedUri, responseBody);
+        JsonLogger.log(sanitizedUri, responseBody);
     }
 
     private String buildRequestDetails(FilterableRequestSpecification requestSpec) {
