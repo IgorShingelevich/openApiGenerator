@@ -20,6 +20,7 @@ import io.qameta.allure.Story;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -31,8 +32,11 @@ import org.openapitools.client.model.petStoreModel.Pet;
 
 import org.openapitools.client.service.petStoreService.ApiClient;
 
+import static io.qameta.allure.Allure.step;
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
@@ -65,18 +69,40 @@ public class PetTest {
     @ParameterizedTest(name = "{0}")
     @DisplayName("param test pet")
     public void testPet(PetModelPositiveCase testCase) {
-        Pet pet = testCase.getPet();
-        Integer expectedStatusCode = testCase.getStatusCode();
+        Response response = step("act: Create a new pet in the store", () -> {
+            // Adjusted API call to match the builder pattern
+            return api.addPet()
+                    .body(testCase.getPet())
+                    .execute(r -> r.prettyPeek());
+        });
+        step("asssert: Create a new pet in the store", () -> {
+            // Assert that the response status code is as expected
+            assertEquals(testCase.getStatusCode(), response.getStatusCode(), "Status code does not match the expected value.");
+        });
+    }
 
-        // Adjusted API call to match the builder pattern
-        Response response = api.addPet()
-                .body(pet)
-                .execute(r -> r.prettyPeek());
+    @EnumSource(PetModelPositiveCase.class)
+    @ParameterizedTest(name = "{0}")
+    @DisplayName("param test pet")
+    public void testPetV2(PetModelPositiveCase testCase) {
+        ValidatableResponse response = step("act: Create a new pet in the store", () -> {
+            // Adjusted API call to use ValidatableResponse
+            return api.addPet()
+                    .body(testCase.getPet())
+                    .execute(r -> r.prettyPeek())
+                    .then()
+                    .statusCode(testCase.getStatusCode());
+        });
 
-        System.out.println("response: " + response.body().toString());
+        step("asssert: Create a new pet in the store", () -> {
+            // Assert that the response status code is as expected
+            assertEquals(testCase.getStatusCode(), response.extract().statusCode(), "Status code does not match the expected value.");
+            // 2th way to assert status code
+            response
+                    .assertThat()
+                    .body( "name", containsString("doggie"));
+        });
 
-        // Assert that the response status code is as expected
-        assertEquals(expectedStatusCode, response.getStatusCode(), "Status code does not match the expected value.");
     }
 
 
