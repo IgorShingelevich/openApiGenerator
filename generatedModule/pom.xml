@@ -57,7 +57,7 @@
     <build>
         <plugins>
 
-<!--            openApiGenerator -->
+            <!--            openApiGenerator -->
             <plugin>
                 <groupId>org.openapitools</groupId>
                 <artifactId>openapi-generator-maven-plugin</artifactId>
@@ -74,7 +74,8 @@
                             <configOptions>
                                 <sourceFolder>src/gen/java/main/petStoreClassicGenerated</sourceFolder>
                                 <library>rest-assured</library>
-                                <invokerPackage>org.openapitools.client.service.petStoreService</invokerPackage> <!-- Default: org.openapitools.client -->
+                                <invokerPackage>org.openapitools.client.service.petStoreService
+                                </invokerPackage> <!-- Default: org.openapitools.client -->
                                 <apiPackage>org.openapitools.client.api.petStoreApi</apiPackage>
                                 <modelPackage>org.openapitools.client.model.petStoreModel</modelPackage>
                                 <generateApiTests>true</generateApiTests> <!-- Default: false -->
@@ -128,7 +129,9 @@
                             <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/petStoreClassicGenerated</directory>
+                                    <directory>
+                                        ${project.build.directory}/generated-sources/openapi/src/gen/java/main/petStoreClassicGenerated
+                                    </directory>
                                     <filtering>false</filtering>
                                     <filtering>false</filtering>
                                     <includes>
@@ -150,7 +153,9 @@
                             <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                             <resources>
                                 <resource>
-                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/adobeSwaggerGenerated</directory>
+                                    <directory>
+                                        ${project.build.directory}/generated-sources/openapi/src/gen/java/main/adobeSwaggerGenerated
+                                    </directory>
                                     <filtering>false</filtering>
                                     <includes>
                                         <include>**/*</include>
@@ -161,8 +166,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-
 
         </plugins>
 
