@@ -53,8 +53,6 @@
             <version>4.13.2</version>
         </dependency>
     </dependencies>
-    <!--    https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-maven-plugin -->
-<!--   https://mvnrepository.com/artifact/org.openapitools/openapi-generator-maven-plugin -->
 
     <build>
         <plugins>
@@ -127,11 +125,9 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-<!--                            <outputDirectory>${project.basedir}/src/main/java/petStore</outputDirectory>-->
                             <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                             <resources>
                                 <resource>
-<!--                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/org/openapitools/client</directory>-->
                                     <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/petStoreClassicGenerated</directory>
                                     <filtering>false</filtering>
                                     <filtering>false</filtering>
@@ -154,7 +150,6 @@
                             <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                             <resources>
                                 <resource>
-<!--                                    <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/org/openapitools/client</directory>-->
                                     <directory>${project.build.directory}/generated-sources/openapi/src/gen/java/main/adobeSwaggerGenerated</directory>
                                     <filtering>false</filtering>
                                     <includes>

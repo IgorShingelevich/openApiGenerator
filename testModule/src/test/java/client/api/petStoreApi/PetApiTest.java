@@ -17,6 +17,7 @@ import java.io.File;
 
 import baseApi.CustomLoggingFilter;
 import io.restassured.response.Response;
+import io.restassured.response.ValidatableResponse;
 import org.openapitools.client.model.petStoreModel.Pet;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.PetApi;
@@ -80,9 +81,9 @@ public class PetApiTest {
     public void shouldSee405AfterAddPet() {
         Pet body = new Pet();
         body.setId(-1L);
-        api.addPet()
+        ValidatableResponse response = api.addPet()
                 .body(body).execute(r -> r.prettyPeek())
-//                .then()
+                .then();
 //                .statusCode(405) // Validate that the status code is indeed 405
 //                .body("type", equalTo("error")) // Assuming the response has an error type field
 //                .body("message", containsString("Method Not Allowed"))
