@@ -59,19 +59,7 @@ public class PetApiTest {
                         .setBaseUri("https://petstore.swagger.io/v2"))).pet();
     }
 
-//    @BeforeEach
-//    public void createApi() {
-//        try {
-//            api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-//                    () -> new RequestSpecBuilder()
-//                    // Configuration
-//            )).pet();
-//            System.out.println("API client initialized successfully");
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            System.out.println("Error initializing API client: " + e.getMessage());
-//        }
-//    }
+
 
 
     /**
