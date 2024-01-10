@@ -73,6 +73,7 @@
                             <generatorName>java</generatorName>
                             <configOptions>
                                 <sourceFolder>src/gen/java/main/petStoreClassicGenerated</sourceFolder>
+<!--                                <sourceFolder>petStoreClassicGenerated</sourceFolder>-->
                                 <library>rest-assured</library>
                                 <invokerPackage>org.openapitools.client.service.petStoreService
                                 </invokerPackage> <!-- Default: org.openapitools.client -->
@@ -97,6 +98,7 @@
                             <generatorName>java</generatorName>
                             <configOptions>
                                 <sourceFolder>src/gen/java/main/adobeSwaggerGenerated</sourceFolder>
+<!--                                <sourceFolder>adobeSwaggerGenerated</sourceFolder>-->
                                 <library>rest-assured</library>
                                 <invokerPackage>org.openapitools.client.service.adobeService</invokerPackage>
                                 <apiPackage>org.openapitools.client.api.adobe</apiPackage>
@@ -166,6 +168,55 @@
                     </execution>
                 </executions>
             </plugin>
+
+            <!-- Maven Clean Plugin -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.3.2</version> <!-- Use the latest version -->
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+<!--                <configuration>-->
+<!--                    <filesets>-->
+<!--                        <fileset>-->
+<!--                            <directory>-->
+<!--                                ${project.build.directory}/target</directory>-->
+<!--                            <includes>-->
+<!--                                <include>**/*</include>-->
+<!--                            </includes>-->
+<!--                            <followSymlinks>false</followSymlinks>-->
+<!--                        </fileset>-->
+<!--                    </filesets>-->
+<!--                </configuration>-->
+            </plugin>
+
+<!--            &lt;!&ndash; Maven Antrun Plugin &ndash;&gt;-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-antrun-plugin</artifactId>-->
+<!--                <version>3.1.0</version> &lt;!&ndash; Use the latest version &ndash;&gt;-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>compile</phase> &lt;!&ndash; Run after the package phase &ndash;&gt;-->
+<!--                        <configuration>-->
+<!--                            <target>-->
+<!--                                <echo message="Deleting target folder..." />-->
+<!--                                <delete dir="${project.build.directory}" />-->
+<!--                            </target>-->
+<!--                        </configuration>-->
+<!--                        <goals>-->
+<!--                            <goal>run</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
 
         </plugins>
 

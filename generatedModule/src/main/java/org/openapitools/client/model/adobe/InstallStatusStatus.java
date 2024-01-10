@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * InstallStatusStatus
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-12-20T10:31:03.539745700+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-10T10:09:55.824835700+03:00[Europe/Moscow]")
 public class InstallStatusStatus {
   public static final String SERIALIZED_NAME_FINISHED = "finished";
   @SerializedName(SERIALIZED_NAME_FINISHED)
