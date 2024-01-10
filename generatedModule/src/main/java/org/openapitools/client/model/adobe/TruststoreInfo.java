@@ -29,7 +29,7 @@ import org.openapitools.client.model.adobe.TruststoreItems;
 /**
  * TruststoreInfo
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-10T10:09:55.824835700+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-10T12:02:36.334870200+03:00[Europe/Moscow]")
 public class TruststoreInfo {
   public static final String SERIALIZED_NAME_ALIASES = "aliases";
   @SerializedName(SERIALIZED_NAME_ALIASES)

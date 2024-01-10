@@ -25,7 +25,7 @@ import java.io.IOException;
 /**
  * SamlConfigurationPropertyItemsString
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-10T10:09:55.824835700+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-10T12:02:36.334870200+03:00[Europe/Moscow]")
 public class SamlConfigurationPropertyItemsString {
   public static final String SERIALIZED_NAME_DESCRIPTION = "description";
   @SerializedName(SERIALIZED_NAME_DESCRIPTION)

@@ -1,0 +1,10 @@
+{
+  "id" : 2,
+  "name" : "doggie2",
+  "photoUrls" : [ "https://petstore.swagger.io/v2/pet/2/photo" ],
+  "tags" : [ {
+    "id" : 2,
+    "name" : "tag2"
+  } ],
+  "status" : "pending"
+}
