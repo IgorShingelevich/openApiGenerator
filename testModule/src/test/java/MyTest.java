@@ -56,5 +56,7 @@ public class MyTest {
                 .as(Pet.class);
 
         System.out.println("Retrieved pet: " + pet);
+
+        //do smth here
     }
 }

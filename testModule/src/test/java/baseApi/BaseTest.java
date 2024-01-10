@@ -8,6 +8,7 @@ public abstract class BaseTest {
 
     @BeforeAll
     public static void setUp() {
+        // Configure and create an instance of ApiClient
     }
 
 }
