@@ -1,0 +1,4 @@
+Method: GET
+URL: https://petstore.swagger.io/v2/pet/4
+Headers: Accept=application/json
+Query Params: {}

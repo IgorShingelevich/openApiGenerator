@@ -75,6 +75,9 @@
                                 <sourceFolder>src/gen/java/main/petStoreClassicGenerated</sourceFolder>
 <!--                                <sourceFolder>petStoreClassicGenerated</sourceFolder>-->
                                 <library>rest-assured</library>
+                                <additionalProperties>
+                                    <serializationLibrary>jackson</serializationLibrary>
+                                </additionalProperties>
                                 <invokerPackage>org.openapitools.client.service.petStoreService
                                 </invokerPackage> <!-- Default: org.openapitools.client -->
                                 <apiPackage>org.openapitools.client.api.petStoreApi</apiPackage>

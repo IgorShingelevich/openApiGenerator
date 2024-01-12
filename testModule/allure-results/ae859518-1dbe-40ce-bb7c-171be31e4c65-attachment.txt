@@ -1,0 +1,6 @@
+Method: PUT
+URL: https://petstore.swagger.io/v2/pet
+Headers: Accept=application/json
+Content-Type=application/json
+Query Params: {}
+Body: {"id":1,"category":{},"name":"doggie","photoUrls":[],"tags":[],"status":"available"}

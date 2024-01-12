@@ -18,7 +18,9 @@ import java.io.File;
 import baseApi.CustomLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
+import org.openapitools.client.model.petStoreModel.Category;
 import org.openapitools.client.model.petStoreModel.Pet;
+import org.openapitools.client.model.petStoreModel.User;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.PetApi;
 import io.restassured.builder.RequestSpecBuilder;
@@ -60,7 +62,6 @@ public class PetApiTest {
     }
 
 
-
     /**
      * Invalid input
      */
@@ -74,7 +75,7 @@ public class PetApiTest {
 //                .statusCode(405) // Validate that the status code is indeed 405
 //                .body("type", equalTo("error")) // Assuming the response has an error type field
 //                .body("message", containsString("Method Not Allowed"))
-        ; // Validate the error message
+        // Validate the error message
         System.out.println("request body: " + body);
         // TODO: test validations
     }
@@ -129,7 +130,8 @@ public class PetApiTest {
     public void shouldSee200AfterFindPetsByStatus() {
         List<String> status = List.of("123123");
         Response response = api.findPetsByStatus()
-                .statusQuery(status).execute(r -> r.prettyPeek());
+                .statusQuery(status)
+                .execute(r -> r.prettyPeek());
         System.out.println("response: " + response.body().toString());
         // TODO: test validations
     }
@@ -173,10 +175,38 @@ public class PetApiTest {
      * successful operation
      */
     @Test
+    @DisplayName("why  different dtoclasses  fits the  same expression??")
     public void shouldSee200AfterGetPetById() {
-        Long petId = 1L;
-        api.getPetById()
-                .petIdPath(petId).execute(r -> r.prettyPeek());
+        Long petId = 4L;
+        // dto from response
+        User userPetDto = api.getPetById()
+                .petIdPath(petId)
+                .execute(r -> r.prettyPeek())
+                .as(User.class);
+        Pet pet = api.getPetById()
+                .petIdPath(petId)
+                .execute(r -> r.prettyPeek())
+                .as(Pet.class);
+
+//        System.out.println("Pet petDto: " + petDto.toString());
+//        System.out.println("get petDto id: " + petDto.getId());
+//        System.out.println("get petDto category id: " + petDto.getCategory().getId());
+//        System.out.println("get petDto name: " + petDto.getName());
+
+        // dto from validatable response
+        Pet petDtoValResp = api.getPetById()
+                .petIdPath(petId)
+                .execute(r -> r.prettyPeek())
+                .then()
+                .statusCode(200)
+                .extract()
+                .as(Pet.class); // Adjust here to return a Response object
+        System.out.println("Pet petDtoValResp: " + petDtoValResp.toString());
+        System.out.println("get petDtoValResp id: " + petDtoValResp.getId());
+        System.out.println("get petDtoValResp category id: " + petDtoValResp.getCategory().getId());
+        System.out.println("get petDtoValResp name: " + petDtoValResp.getName());
+
+
         // TODO: test validations
     }
 
@@ -207,8 +237,14 @@ public class PetApiTest {
      * Invalid ID supplied
      */
     @Test
-    public void shouldSee400AfterUpdatePet() {
-        Pet body = null;
+    public void shouldSee200AfterUpdatePet() {
+        Pet body = new Pet();
+body.setId( 4L);
+body.setName( "doggie4");
+body.setStatus(Pet.StatusEnum.AVAILABLE);
+body.setTags( new ArrayList<>());
+body.setCategory( new Category());
+
         api.updatePet()
                 .body(body).execute(r -> r.prettyPeek());
         // TODO: test validations
