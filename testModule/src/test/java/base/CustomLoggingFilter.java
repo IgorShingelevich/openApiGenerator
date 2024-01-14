@@ -1,4 +1,4 @@
-package baseApi;
+package base;
 
 import io.qameta.allure.Allure;
 import io.restassured.filter.Filter;

@@ -1,6 +1,6 @@
 package client.model.petStoreModel;
 
-import baseApi.EnumNotSupportedException;
+import base.EnumNotSupportedException;
 import org.openapitools.client.model.petStoreModel.Pet;
 import org.openapitools.client.model.petStoreModel.Tag;
 

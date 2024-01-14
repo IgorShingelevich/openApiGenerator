@@ -15,7 +15,7 @@ package client.api.petStoreApi;
 
 import java.io.File;
 
-import baseApi.CustomLoggingFilter;
+import base.CustomLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.openapitools.client.model.petStoreModel.Pet;
@@ -40,7 +40,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 
-@Tag("baseApi")
+@Tag("base")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")

@@ -13,7 +13,7 @@
 
 package client.api.petStoreApi;
 
-import baseApi.BaseTest;
+import base.BaseTest;
 import org.openapitools.client.model.petStoreModel.Order;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.StoreApi;
@@ -35,7 +35,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 
-@Tag("baseApi")
+@Tag("base")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")

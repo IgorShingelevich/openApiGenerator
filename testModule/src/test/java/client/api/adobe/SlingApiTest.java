@@ -38,7 +38,7 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
 
-@Tag("baseApi")
+@Tag("base")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")

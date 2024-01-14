@@ -13,12 +13,11 @@
 
 package client.model.petStoreModel;
 
-import baseApi.CustomLoggingFilter;
+import base.CustomLoggingFilter;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.ErrorLoggingFilter;
 import io.restassured.response.Response;
 import io.restassured.response.ValidatableResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,14 +35,13 @@ import static io.qameta.allure.Allure.step;
 import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static io.restassured.config.RestAssuredConfig.config;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
 /**
  * Model tests for Pet
  */
-@Tag("baseApi")
+@Tag("base")
 @Epic("setEpic")
 @Feature("setFeature")
 @Story("setStory")

@@ -1,4 +1,4 @@
-package baseApi;
+package base;
 
 public class EnumNotSupportedException extends RuntimeException {
     public EnumNotSupportedException(Enum<?> enumMember) {

@@ -1,4 +1,4 @@
-package baseApi;
+package base;
 
 import org.junit.jupiter.api.BeforeAll;
 
