@@ -16,8 +16,9 @@ package client.api.petStoreApi;
 import java.io.File;
 
 import base.CustomLoggingFilter;
+import base.clientContext.petstore.BasePetstoreApiTest;
+import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
-import io.restassured.response.ValidatableResponse;
 import org.openapitools.client.model.petStoreModel.Pet;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.PetApi;
@@ -45,7 +46,7 @@ import org.junit.jupiter.api.*;
 @Feature("setFeature")
 @Story("setStory")
 //@Disabled
-public class PetApiTest {
+public class PetApiTest extends BasePetstoreApiTest {
 
     private PetApi api;
 
@@ -65,18 +66,25 @@ public class PetApiTest {
      * Invalid input
      */
     @Test
-    public void shouldSee405AfterAddPet() {
+    public void shouldSee200AfterAddPet() {
         Pet body = new Pet();
-        body.setId(-1L);
-        ValidatableResponse response = api.addPet()
+        body.setId(20L);
+        JsonPath jsonPath = api.addPet()
                 .body(body).execute(r -> r.prettyPeek())
-                .then();
-//                .statusCode(405) // Validate that the status code is indeed 405
-//                .body("type", equalTo("error")) // Assuming the response has an error type field
-//                .body("message", containsString("Method Not Allowed"))
-        ; // Validate the error message
-        System.out.println("request body: " + body);
-        // TODO: test validations
+                .then()
+                .statusCode(200)
+                .extract()
+                .jsonPath();
+
+        Pet actualDto = jsonPath.getObject("", Pet.class);
+        assert actualDto != null;
+        Assertions.assertEquals(20L, actualDto.getId());
+        // exclude with assertj recursive comparison photo urls:[] and tags:[] because I want to exclude urls and tags from comparison.
+        Pet expectedDto = new Pet();
+        expectedDto.setId(20L);
+        expectedDto.setTags(List.of());
+        expectedDto.setPhotoUrls(List.of());
+//        assertResponsePartialFields(expectedDto, actualDto, List.of("photoUrls", "tags"));
     }
 
     @Test
