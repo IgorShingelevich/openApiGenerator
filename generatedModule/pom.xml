@@ -111,7 +111,7 @@
                     </execution>
 
                     <execution>
-                        <id>petstore-classic-codegenV2</id>
+                        <id>petstore-classic-codegen</id>
                         <goals>
                             <goal>generate</goal>
                         </goals>

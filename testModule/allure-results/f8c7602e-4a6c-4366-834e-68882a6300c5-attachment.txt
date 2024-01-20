@@ -1,0 +1,24 @@
+Status Code: 200
+Headers: Date=Tue, 26 Dec 2023 12:28:15 GMT
+Content-Type=application/json
+Transfer-Encoding=chunked
+Connection=keep-alive
+Access-Control-Allow-Origin=*
+Access-Control-Allow-Methods=GET, POST, DELETE, PUT
+Access-Control-Allow-Headers=Content-Type, api_key, Authorization
+Server=Jetty(9.2.9.v20150224)
+Body: 
+{
+    "id": 2,
+    "name": "doggie2",
+    "photoUrls": [
+        "https://petstore.swagger.io/v2/pet/2/photo"
+    ],
+    "tags": [
+        {
+            "id": 2,
+            "name": "tag2"
+        }
+    ],
+    "status": "pending"
+}
