@@ -27,10 +27,20 @@ import java.util.List;
 import org.openapitools.client.model.petStoreModel.Category;
 import org.openapitools.client.model.petStoreModel.Tag;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.Builder;
+import lombok.AllArgsConstructor;
+
 /**
  * Pet
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-16T21:00:57.440911+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-01-19T22:00:10.778381300+03:00[Europe/Moscow]")
+
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class Pet {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -303,4 +313,3 @@ public class Pet {
   }
 
 }
-

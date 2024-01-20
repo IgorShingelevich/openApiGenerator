@@ -16,7 +16,14 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <allure.version>2.24.0</allure.version>
-        <aspectj.version>1.9.20.1</aspectj.version>
+        <allure-maven.version>2.12.0</allure-maven.version>
+        <assertj-core.version>3.25.0</assertj-core.version>
+        <jsonassert.version>1.5.1</jsonassert.version>
+        <apache.commons-lang3.version>3.14.0</apache.commons-lang3.version>
+        <jackson-core.version>2.15.0</jackson-core.version>
+        <google.gson.version>2.10.1</google.gson.version>
+        <org.json.version>20230227</org.json.version>
+        <maven-surefire-plugin.version>3.0.0-M5</maven-surefire-plugin.version>
     </properties>
 
     <!-- Add allure-bom to dependency management to ensure correct versions of all the dependencies are used -->
@@ -41,20 +48,19 @@
         <dependency>
             <groupId>org.assertj</groupId>
             <artifactId>assertj-core</artifactId>
-            <version>3.25.0</version>
-            <scope>test</scope>
+            <version>${assertj-core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
-            <version>1.5.1</version>
+            <version>${jsonassert.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.14.0</version> <!-- Check for the latest version -->
+            <version>${apache.commons-lang3.version}</version>
         </dependency>
 
         <dependency>
@@ -63,36 +69,65 @@
             <version>RELEASE</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>io.qameta.allure</groupId>-->
-<!--            <artifactId>allure-java-commons</artifactId>-->
-<!--            <version>2.14.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>io.qameta.allure</groupId>
             <artifactId>allure-junit5</artifactId>
-            <version>2.25.0</version>
+            <version>${allure.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
-            <version>2.15.3</version>
-            <scope>test</scope>
+            <version>${jackson-core.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.10.1</version>
+            <version>${google.gson.version}</version>
         </dependency>
+
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20230227</version>
-            <scope>test</scope>
+            <version>${org.json.version}</version>
         </dependency>
 
     </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Surefire plugin for running tests and generating allure-results -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <configuration>
+                    <argLine>
+                        -Dallure.results.directory=target/allure-results
+                    </argLine>
+                </configuration>
+            </plugin>
+
+            <!-- Allure Maven plugin for generating Allure report -->
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure-maven.version}</version>
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>serve</goal>
+                        </goals>
+                        <configuration>
+                            <reportVersion>${allure.version}</reportVersion>
+                            <resultsDirectory>target/allure-results</resultsDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

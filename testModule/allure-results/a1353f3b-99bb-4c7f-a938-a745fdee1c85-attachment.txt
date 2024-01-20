@@ -1,4 +1,0 @@
-Method: GET
-URL: https://petstore.swagger.io/v2/pet/findByStatus?status=%5B%22123%22%5D
-Headers: Accept=application/json
-Query Params: {status=["123"]}

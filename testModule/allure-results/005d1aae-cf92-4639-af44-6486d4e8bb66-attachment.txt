@@ -1,6 +1,0 @@
-Method: POST
-URL: https://petstore.swagger.io/v2/pet
-Headers: Accept=application/json
-Content-Type=application/json
-Query Params: {}
-Body: {"id":1,"name":"doggie","photoUrls":["https://petstore.swagger.io/v2/pet/1/photo"],"tags":[{"id":1,"name":"tag1"}],"status":"available"}
