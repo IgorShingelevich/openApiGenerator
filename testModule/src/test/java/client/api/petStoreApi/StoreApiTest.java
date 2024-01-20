@@ -13,6 +13,7 @@
 
 package client.api.petStoreApi;
 
+import base.BasePetstoreApiTest;
 import base.BaseTest;
 import org.openapitools.client.model.petStoreModel.Order;
 import org.openapitools.client.service.petStoreService.ApiClient;
@@ -40,23 +41,12 @@ import org.junit.jupiter.api.*;
 @Feature("setFeature")
 @Story("setStory")
 @Disabled
-public class StoreApiTest extends BaseTest {
+public class StoreApiTest extends BasePetstoreApiTest {
 
-    private StoreApi api;
+    private StoreApi api = storeApi;
 
 
-    @Before
-    public void createApi() {
-        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .addFilter(new ErrorLoggingFilter())
-                        .setBaseUri("https://petstore.swagger.io/v2"))).store();
-    }
-//@Override
-//protected CustomApiClient createCustomApiClient() {
-//    return new CustomApiClient("https://petstore.swagger.io/v2", StoreApi.class,  StoreApi::store);
-//}
+
 
     /**
      * Invalid ID supplied

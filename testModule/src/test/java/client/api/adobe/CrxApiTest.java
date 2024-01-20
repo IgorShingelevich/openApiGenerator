@@ -15,6 +15,7 @@ package client.api.adobe;
 
 import java.io.File;
 
+import base.BaseAdobeApiTest;
 import org.openapitools.client.service.adobeService.ApiClient;
 import org.openapitools.client.api.adobe.CrxApi;
 import io.restassured.builder.RequestSpecBuilder;
@@ -40,18 +41,10 @@ import org.junit.jupiter.api.*;
 @Feature("setFeature")
 @Story("setStory")
 @Disabled
-public class CrxApiTest {
+public class CrxApiTest extends BaseAdobeApiTest {
 
-    private CrxApi api;
+    private CrxApi api = crxApi;
 
-    @Before
-    public void createApi() {
-        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .addFilter(new ErrorLoggingFilter())
-                        .setBaseUri("https://api.apis.guru"))).crx();
-    }
 
     /**
      * CRXDE is enabled

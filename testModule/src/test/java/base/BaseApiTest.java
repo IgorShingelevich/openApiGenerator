@@ -1,19 +1,25 @@
 package base;
 
+import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.path.json.JsonPath;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.openapitools.client.service.petStoreService.ApiClient;
 import org.skyscreamer.jsonassert.JSONAssert;
 
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import static io.restassured.RestAssured.config;
+import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
 public abstract class BaseApiTest  extends BaseTest {
+
 
     protected void assertResponsePartialNoATExcludeFields(JsonPath expectedJsonPath, JsonPath actualJsonPath, List<String> excludedFields) {
         Object expectedResponse = expectedJsonPath.get();

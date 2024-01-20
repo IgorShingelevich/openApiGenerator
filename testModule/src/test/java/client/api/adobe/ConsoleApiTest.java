@@ -13,6 +13,7 @@
 
 package client.api.adobe;
 
+import base.BaseAdobeApiTest;
 import org.openapitools.client.service.adobeService.ApiClient;
 import org.openapitools.client.api.adobe.ConsoleApi;
 import io.restassured.builder.RequestSpecBuilder;
@@ -40,18 +41,9 @@ import org.junit.jupiter.api.*;
 @Feature("setFeature")
 @Story("setStory")
 @Disabled
-public class ConsoleApiTest {
+public class ConsoleApiTest extends BaseAdobeApiTest {
 
-    private ConsoleApi api;
-
-    @Before
-    public void createApi() {
-        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .addFilter(new ErrorLoggingFilter())
-                        .setBaseUri("https://api.apis.guru"))).console();
-    }
+    private ConsoleApi api = consoleApi;
 
     /**
      * Default response

@@ -14,6 +14,7 @@
 package client.api.petStoreApi;
 
 
+import base.BasePetstoreApiTest;
 import org.openapitools.client.model.petStoreModel.User;
 import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.UserApi;
@@ -39,18 +40,8 @@ import org.junit.jupiter.api.*;
 /**
  * API tests for UserApi
  */
-public class UserApiTest {
-
-    private UserApi api;
-
-    @BeforeEach
-    public void createApi() {
-        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .addFilter(new ErrorLoggingFilter())
-                        .setBaseUri("https://petstore.swagger.io/v2"))).user();
-    }
+public class UserApiTest extends BasePetstoreApiTest {
+    private UserApi api = userApi;
 
     /**
      * successful operation

@@ -16,7 +16,7 @@ package client.api.petStoreApi;
 import java.io.File;
 
 import base.CustomLoggingFilter;
-import base.clientContext.petstore.BasePetstoreApiTest;
+import base.BasePetstoreApiTest;
 import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
 import org.openapitools.client.model.petStoreModel.Pet;
@@ -48,17 +48,8 @@ import org.junit.jupiter.api.*;
 //@Disabled
 public class PetApiTest extends BasePetstoreApiTest {
 
-    private PetApi api;
+    private PetApi api = petApi;
 
-    @BeforeEach
-    public void createApi() {
-        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-//                        .addFilter(new ErrorLoggingFilter())
-                        .addFilter(new CustomLoggingFilter())
-                        .setBaseUri("https://petstore.swagger.io/v2"))).pet();
-    }
 
 
 

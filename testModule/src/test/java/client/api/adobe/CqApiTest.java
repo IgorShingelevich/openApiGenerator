@@ -13,6 +13,7 @@
 
 package client.api.adobe;
 
+import base.BaseAdobeApiTest;
 import org.openapitools.client.service.adobeService.ApiClient;
 import org.openapitools.client.api.adobe.CqApi;
 import io.restassured.builder.RequestSpecBuilder;
@@ -38,18 +39,10 @@ import org.junit.jupiter.api.*;
 @Feature("setFeature")
 @Story("setStory")
 @Disabled
-public class CqApiTest {
+public class CqApiTest extends BaseAdobeApiTest {
 
-    private CqApi api;
+    private CqApi api = cqApi;
 
-    @Before
-    public void createApi() {
-        api = ApiClient.api(ApiClient.Config.apiConfig().reqSpecSupplier(
-                () -> new RequestSpecBuilder()
-                        .setConfig(config().objectMapperConfig(objectMapperConfig().defaultObjectMapper(gson())))
-                        .addFilter(new ErrorLoggingFilter())
-                        .setBaseUri("https://api.apis.guru"))).cq();
-    }
 
     /**
      * Default response
