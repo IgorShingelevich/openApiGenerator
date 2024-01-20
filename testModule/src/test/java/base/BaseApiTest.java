@@ -1,40 +1,26 @@
 package base;
 
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.assertj.core.api.Assertions;
 import org.assertj.core.api.recursive.comparison.RecursiveComparisonConfiguration;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.openapitools.client.service.petStoreService.ApiClient;
-import org.skyscreamer.jsonassert.JSONAssert;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
+import java.util.function.Function;
 
-import static io.restassured.RestAssured.config;
-import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
-public abstract class BaseApiTest  extends BaseTest {
+public abstract class BaseApiTest extends BaseTest {
 
-
-    protected void assertResponsePartialNoATExcludeFields(JsonPath expectedJsonPath, JsonPath actualJsonPath, List<String> excludedFields) {
-        Object expectedResponse = expectedJsonPath.get();
-        Object actualResponse = actualJsonPath.get();
-        RecursiveComparisonConfiguration.Builder builder = RecursiveComparisonConfiguration.builder();
-        // Condition 1: Ignore fields ending with specific patterns
-        builder = builder.withIgnoredFieldsMatchingRegexes(".*(At|Ended|Started|countNotReadNotification)");
-        // Condition 2: Handling excluded fields
-        if (!excludedFields.isEmpty()) {
-            builder = builder.withIgnoredFields(excludedFields.toArray(new String[0]));
-        }
-        RecursiveComparisonConfiguration configuration = builder.build();
-        assertThat(actualResponse)
-                .usingRecursiveComparison(configuration)
-                .isEqualTo(expectedResponse);
+    @NotNull
+    protected static Function<Response, Response> checkSuccessStatusCode() {
+        return r -> r.then()
+                .assertThat()
+                .statusCode(200)
+                .extract()
+                .response()
+                .prettyPeek();
     }
 
     public static <T> void assertDtoPartial(T actualDto, T expectedDto, String fieldToExclude) {
@@ -57,7 +43,21 @@ public abstract class BaseApiTest  extends BaseTest {
                 .isEqualTo(expectedDto);
     }
 
-
+    protected void assertResponsePartialNoATExcludeFields(JsonPath expectedJsonPath, JsonPath actualJsonPath, List<String> excludedFields) {
+        Object expectedResponse = expectedJsonPath.get();
+        Object actualResponse = actualJsonPath.get();
+        RecursiveComparisonConfiguration.Builder builder = RecursiveComparisonConfiguration.builder();
+        // Condition 1: Ignore fields ending with specific patterns
+        builder = builder.withIgnoredFieldsMatchingRegexes(".*(At|Ended|Started|countNotReadNotification)");
+        // Condition 2: Handling excluded fields
+        if (!excludedFields.isEmpty()) {
+            builder = builder.withIgnoredFields(excludedFields.toArray(new String[0]));
+        }
+        RecursiveComparisonConfiguration configuration = builder.build();
+        assertThat(actualResponse)
+                .usingRecursiveComparison(configuration)
+                .isEqualTo(expectedResponse);
+    }
 
 
 }

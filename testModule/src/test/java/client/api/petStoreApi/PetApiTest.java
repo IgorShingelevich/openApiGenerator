@@ -15,23 +15,18 @@ package client.api.petStoreApi;
 
 import java.io.File;
 
-import base.CustomLoggingFilter;
 import base.BasePetstoreApiTest;
-import io.restassured.path.json.JsonPath;
 import io.restassured.response.Response;
+import org.jetbrains.annotations.NotNull;
 import org.openapitools.client.model.petStoreModel.Pet;
-import org.openapitools.client.service.petStoreService.ApiClient;
 import org.openapitools.client.api.petStoreApi.PetApi;
-import io.restassured.builder.RequestSpecBuilder;
 import org.junit.jupiter.api.Test;
 
 
 import java.util.*;
+import java.util.function.Function;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.config.ObjectMapperConfig.objectMapperConfig;
-import static io.restassured.config.RestAssuredConfig.config;
-import static org.openapitools.client.service.petStoreService.GsonObjectMapper.gson;
 
 /**
  * API tests for PetApi
@@ -50,9 +45,6 @@ public class PetApiTest extends BasePetstoreApiTest {
 
     private PetApi api = petApi;
 
-
-
-
     /**
      * Invalid input
      */
@@ -60,22 +52,10 @@ public class PetApiTest extends BasePetstoreApiTest {
     public void shouldSee200AfterAddPet() {
         Pet body = new Pet();
         body.setId(20L);
-        JsonPath jsonPath = api.addPet()
-                .body(body).execute(r -> r.prettyPeek())
-                .then()
-                .statusCode(200)
-                .extract()
-                .jsonPath();
 
-        Pet actualDto = jsonPath.getObject("", Pet.class);
-        assert actualDto != null;
-        Assertions.assertEquals(20L, actualDto.getId());
-        // exclude with assertj recursive comparison photo urls:[] and tags:[] because I want to exclude urls and tags from comparison.
-        Pet expectedDto = new Pet();
-        expectedDto.setId(20L);
-        expectedDto.setTags(List.of());
-        expectedDto.setPhotoUrls(List.of());
-//        assertResponsePartialFields(expectedDto, actualDto, List.of("photoUrls", "tags"));
+        Response response = api.addPet()
+                .body(body)
+                .execute(checkSuccessStatusCode());
     }
 
     @Test

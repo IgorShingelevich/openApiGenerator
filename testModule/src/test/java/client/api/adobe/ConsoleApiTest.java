@@ -45,12 +45,25 @@ public class ConsoleApiTest extends BaseAdobeApiTest {
 
     private ConsoleApi api = consoleApi;
 
+
+    /**
+     * Default response
+     */
+    @Test
+    @DisplayName("[GET] [/system/console/status-productinfo.json] get smth")
+    public void successGetTest() {
+        List<String> strings = api.getAemProductInfo()
+                .executeAs(checkSuccessStatusCode());
+        // TODO: test validations
+    }
+
     /**
      * Default response
      */
     @Test
     public void shouldSee0AfterGetAemProductInfo() {
-        api.getAemProductInfo().execute(r -> r.prettyPeek());
+        List<String> strings = api.getAemProductInfo()
+                .executeAs(checkSuccessStatusCode());
         // TODO: test validations
     }
 
