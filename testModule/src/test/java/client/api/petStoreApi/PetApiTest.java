@@ -28,6 +28,7 @@ import java.util.function.Function;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 import static utils.JsonUtils.readObjectFromJsonFile;
 
 /**
@@ -70,7 +71,7 @@ public class PetApiTest extends BasePetstoreApiTest {
                 .extract()
                 .as(Pet.class);
 
-        Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "success", Pet.class);
+        Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "$", Pet.class);
         assertThat(expectedFromFile)
                 .as("Check if the pet from the file is an instance of Pet")
                 .isInstanceOf(Pet.class);
@@ -84,6 +85,184 @@ public class PetApiTest extends BasePetstoreApiTest {
                 .as("Check if the actual pet added matches the pet retrieved from API")
                 .isEqualTo(expectedFromGetPet);
     }
+
+    @Test
+    public void shouldSee200AfterAddPetVerbosePolling() {
+        // Reading pet details from the file
+        Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "$", Pet.class);
+
+        // Adding the pet from the file
+        Pet actualPet = api.addPet()
+                .body(expectedFromFile)
+                .execute(checkSuccessStatusCode())
+                .then()
+                .extract()
+                .as(Pet.class);
+
+        // Polling the status and retrieving the pet
+        Pet expectedFromGetPet = null;
+        for (int i = 0; i < 10; i++) { // Assuming a maximum of 10 attempts
+            try {
+                Thread.sleep(1000); // Delay for polling, adjust as needed
+                Response response = api.getPetById()
+                        .petIdPath(expectedFromFile.getId()).execute(checkSuccessStatusCode())
+                        .andReturn();
+
+                int statusCode = response.getStatusCode();
+                if (statusCode != 200) {
+                    fail("Failed to retrieve the pet: expected status code 200 but got " + statusCode);
+                }
+
+                expectedFromGetPet = response.then().extract().as(Pet.class);
+
+                if ("successful".equals(expectedFromGetPet.getStatus())) {
+                    break;
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                fail("Polling thread was interrupted: " + e.getMessage());
+            } catch (Exception e) {
+                fail("Error occurred while polling the pet status: " + e.getMessage());
+            }
+        }
+
+        if (expectedFromGetPet == null || !"successful".equals(expectedFromGetPet.getStatus())) {
+            fail("Failed to retrieve the pet with a successful status");
+        }
+
+        // Asserting that the expected pet from file matches the one retrieved from the API
+        assertThat(expectedFromFile)
+                .as("Check if the pet from the file matches the pet retrieved from API")
+                .isEqualTo(expectedFromGetPet);
+
+        // Asserting that the actual pet added matches the one retrieved from the API
+        assertThat(actualPet)
+                .as("Check if the actual pet added matches the pet retrieved from API")
+                .isEqualTo(expectedFromGetPet);
+    }
+
+    @Test
+    public void shouldSee200AfterAddPetPolling() {
+        // Reading pet details from the file
+        Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "$", Pet.class);
+
+        // Adding the pet from the file
+        Pet actualPet = api.addPet()
+                .body(expectedFromFile)
+                .execute(checkSuccessStatusCode())
+                .then()
+                .extract()
+                .as(Pet.class);
+
+        // Polling the status and retrieving the pet
+        Pet expectedFromGetPet = null;
+        boolean isAvailable = false;
+        for (int i = 0; i < 3; i++) { // Assuming a maximum of 10 attempts
+            try {
+                Thread.sleep(1000); // Delay for polling, adjust as needed
+                Response response = api.getPetById()
+                        .petIdPath(expectedFromFile.getId()).execute(r-> r.prettyPeek())
+                        .andReturn();
+
+                int statusCode = response.getStatusCode();
+                assertThat(statusCode)
+                        .as("Check if the status code is 200")
+                        .isEqualTo(200);
+
+                expectedFromGetPet = response.then().extract().as(Pet.class);
+
+                if ("available".equals(expectedFromGetPet.getStatus())) {
+                    isAvailable = true;
+                    break;
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                fail("Polling thread was interrupted: " + e.getMessage());
+            } catch (Exception e) {
+                fail("Error occurred while polling the pet status: " + e.getMessage());
+            }
+        }
+
+// Assert that the pet's status becomes 'available' within the maximum number of attempts
+        assertThat(isAvailable)
+                .as("Check if the pet's status becomes 'available' within the maximum number of attempts")
+                .isTrue();
+
+
+        if (!isAvailable) {
+            fail("Failed to retrieve the pet with an 'available' status within the maximum number of attempts");
+        }
+
+
+
+        // Asserting that the expected pet from file matches the one retrieved from the API
+        assertThat(expectedFromFile)
+                .as("Check if the pet from the file matches the pet retrieved from API")
+                .isEqualTo(actualPet);
+
+        // Asserting that the actual pet added matches the one retrieved from the API
+        assertThat(actualPet)
+                .as("Check if the actual pet added matches the pet retrieved from API")
+                .isEqualTo(expectedFromFile);
+    }
+
+    @Test
+    public void shouldSee200AfterAddPetPollingSimple() {
+        // Reading pet details from the file
+        Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "$", Pet.class);
+
+        // Adding the pet from the file
+        Pet actualPet = api.addPet()
+                .body(expectedFromFile)
+                .execute(checkSuccessStatusCode())
+                .then()
+                .extract()
+                .as(Pet.class);
+
+        // Polling the status and retrieving the pet
+        String expectedStatus = "vailable"; // Assuming this is intentional
+        Pet petDtoFromLoopPolling = null;
+        boolean statusFieldMatched = false;
+        boolean statusCodeMatched = false;
+
+        for (int i = 0; i < 3; i++) {
+            try {
+                Thread.sleep(1000); // Delay for polling
+
+                Response response = api.getPetById()
+                        .petIdPath(expectedFromFile.getId()).execute(r -> r.prettyPeek())
+                        .andReturn();
+
+                petDtoFromLoopPolling = response.then().extract().as(Pet.class);
+                int statusCode = response.getStatusCode();
+
+                if (statusCode == 200) {
+                    statusCodeMatched = true;
+                    String statusField = petDtoFromLoopPolling.getStatus().toString();
+
+                    if (statusField.equals(expectedStatus)) {
+                        statusFieldMatched = true;
+                        break; // Exit loop if status matches
+                    }
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                fail("Test interrupted");
+            }
+        }
+        assertThat(statusCodeMatched)
+                .as("Status code should be 200 after " + 3 + " tries")
+                .isTrue();
+
+        assertThat(statusFieldMatched)
+                .as("Status field should match expected status after " + 3 + " tries")
+                .isTrue();
+
+        assertThat(petDtoFromLoopPolling)
+                .as("Check if the pet from the file matches the pet retrieved from API")
+                .isEqualTo(actualPet);
+    }
+
 
     @Test
     public void shouldSee405AfterAddPet2() {
