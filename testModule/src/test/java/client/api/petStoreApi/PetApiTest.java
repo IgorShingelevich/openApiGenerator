@@ -27,6 +27,8 @@ import java.util.*;
 import java.util.function.Function;
 
 import static io.restassured.RestAssured.given;
+import static org.assertj.core.api.Assertions.assertThat;
+import static utils.JsonUtils.readObjectFromJsonFile;
 
 /**
  * API tests for PetApi
@@ -52,10 +54,35 @@ public class PetApiTest extends BasePetstoreApiTest {
     public void shouldSee200AfterAddPet() {
         Pet body = new Pet();
         body.setId(20L);
+        body.setName("doggieName");
+        body.setStatus(Pet.StatusEnum.AVAILABLE);
 
-        Response response = api.addPet()
+        Pet actualPet = api.addPet()
                 .body(body)
-                .execute(checkSuccessStatusCode());
+                .execute(checkSuccessStatusCode())
+                .then()
+                .extract()
+                .as(Pet.class);
+
+        Pet expectedFromGetPet = api.getPetById()
+                .petIdPath(20L).execute(checkSuccessStatusCode())
+                .then()
+                .extract()
+                .as(Pet.class);
+
+        Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "success", Pet.class);
+        assertThat(expectedFromFile)
+                .as("Check if the pet from the file is an instance of Pet")
+                .isInstanceOf(Pet.class);
+        assertThat(expectedFromFile)
+                .as("Check if the pet from the file matches the pet retrieved from API")
+                .isEqualTo(expectedFromGetPet);
+        assertThat(actualPet)
+                .as("Check if the actual pet added matches the pet from the file")
+                .isEqualTo(expectedFromFile);
+        assertThat(actualPet)
+                .as("Check if the actual pet added matches the pet retrieved from API")
+                .isEqualTo(expectedFromGetPet);
     }
 
     @Test
@@ -130,7 +157,7 @@ public class PetApiTest extends BasePetstoreApiTest {
      */
     @Test
     public void shouldSee200AfterFindPetsByTags() {
-        List<String> tags = null;
+        List<String> tags = List.of("123");
         api.findPetsByTags()
                 .tagsQuery(tags).execute(r -> r.prettyPeek());
         // TODO: test validations
