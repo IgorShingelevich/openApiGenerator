@@ -38,6 +38,7 @@ import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import org.junit.jupiter.api.*;
+import utils.ApiPoller;
 
 @Tag("base")
 @Epic("setEpic")
@@ -212,7 +213,7 @@ public class PetApiTest extends BasePetstoreApiTest {
         Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "$", Pet.class);
 
         // Adding the pet from the file
-        Pet actualPet = api.addPet()
+        Pet postPet = api.addPet()
                 .body(expectedFromFile)
                 .execute(checkSuccessStatusCode())
                 .then()
@@ -220,11 +221,13 @@ public class PetApiTest extends BasePetstoreApiTest {
                 .as(Pet.class);
 
         // Polling the status and retrieving the pet
-        String expectedStatus = "vailable"; // Assuming this is intentional
+        String expectedStatusField = "vailable"; // Assuming this is intentional
         Pet petDtoFromLoopPolling = null;
         boolean statusFieldMatched = false;
         boolean statusCodeMatched = false;
 
+        int statusCode = 0;
+        String statusField = null;
         for (int i = 0; i < 3; i++) {
             try {
                 Thread.sleep(1000); // Delay for polling
@@ -234,13 +237,13 @@ public class PetApiTest extends BasePetstoreApiTest {
                         .andReturn();
 
                 petDtoFromLoopPolling = response.then().extract().as(Pet.class);
-                int statusCode = response.getStatusCode();
+                statusCode = response.getStatusCode();
 
                 if (statusCode == 200) {
                     statusCodeMatched = true;
-                    String statusField = petDtoFromLoopPolling.getStatus().toString();
+                    statusField = petDtoFromLoopPolling.getStatus().toString();
 
-                    if (statusField.equals(expectedStatus)) {
+                    if (statusField.equals(expectedStatusField)) {
                         statusFieldMatched = true;
                         break; // Exit loop if status matches
                     }
@@ -250,17 +253,49 @@ public class PetApiTest extends BasePetstoreApiTest {
                 fail("Test interrupted");
             }
         }
-        assertThat(statusCodeMatched)
+//preform those assertions in the end of polling method before return dto from method
+        assertThat(statusCode)
                 .as("Status code should be 200 after " + 3 + " tries")
-                .isTrue();
-
-        assertThat(statusFieldMatched)
+                .isEqualTo(200);
+        assertThat(statusField)
                 .as("Status field should match expected status after " + 3 + " tries")
-                .isTrue();
-
+                .isEqualTo(expectedStatusField);
         assertThat(petDtoFromLoopPolling)
                 .as("Check if the pet from the file matches the pet retrieved from API")
-                .isEqualTo(actualPet);
+                .isEqualTo(postPet);
+
+        //then  test method assertions that  expectedFromFile matches the one retrieved from the API
+
+
+    }
+
+    @Test
+    public void shouldSee200AfterAddPetPollingUtil() {
+
+        // Reading pet details from the file
+        Pet expectedFromFile = readObjectFromJsonFile("src/test/resources/petId20getResponseBody.json", "$", Pet.class);
+
+        // Adding the pet from the file
+        Pet postPet = api.addPet()
+                .body(expectedFromFile)
+                .execute(checkSuccessStatusCode())
+                .then()
+                .extract()
+                .as(Pet.class);
+
+
+        // Using the pollApiCall method
+        Pet polledPet = ApiPoller.pollApiCall200(
+                () -> api.getPetById().petIdPath(postPet.getId()).execute(r ->r.prettyPeek()).andReturn(),
+                Pet.class
+//                pet -> "available".equals(pet.getStatus())
+        );
+
+        // Assertions
+        assertThat(polledPet).isNotNull();
+        assertThat(polledPet.getStatus().toString()).isEqualTo("available");
+        assertThat(polledPet.getId()).isEqualTo(postPet.getId());
+
     }
 
 
