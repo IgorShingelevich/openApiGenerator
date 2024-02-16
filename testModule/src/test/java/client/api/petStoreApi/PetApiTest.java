@@ -63,6 +63,7 @@ public class PetApiTest extends BasePetstoreApiTest {
                 .body(body)
                 .execute(checkSuccessStatusCode())
                 .then()
+                .log().body()
                 .extract()
                 .as(Pet.class);
 

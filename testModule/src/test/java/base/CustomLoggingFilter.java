@@ -52,7 +52,7 @@ public class CustomLoggingFilter implements Filter {
                 requestBuilder.append("Body: ").append(requestBody).append("\n");
             }
         }
-
+        System.out.println("Request " + requestBuilder.toString());  // Add this line
         return requestBuilder.toString();
     }
 
@@ -61,6 +61,7 @@ public class CustomLoggingFilter implements Filter {
         String responseBuilder = "Status Code: " + response.getStatusCode() + "\n" +
                 "Headers: " + response.getHeaders() + "\n" +
                 "Body: \n" + response.getBody().prettyPrint();
+        System.out.println("Response " + responseBuilder);  // Add this line
         return responseBuilder;
     }
 }
